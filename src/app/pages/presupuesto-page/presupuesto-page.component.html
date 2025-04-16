@@ -12,17 +12,11 @@
       background-position: 0% 50%;
     }
   }
-
-  .animated-gradient {
-    background: linear-gradient(270deg, #0e0872, #571f8b, #882959);
-    background-size: 600% 600%;
-    animation: gradientAnimation 10s ease infinite;
-  }
 </style>
 
 
 <section
-  class="animated-gradient bg-gradient-to-r from-indigo-900 to-purple-950 text-white border-2 border-solid flex md:mx-[25%] flex-col mx-10 my-10 rounded-4xl content-center min-h-[200px] relative">
+  class="bg-base-300 text-white border-solid flex md:mx-[25%] flex-col mx-10 my-10 rounded-4xl content-center min-h-[200px] relative">
   <article class="p-4 ">
     <h2 class="text-center text-lg font-semibold leading-7 md:text-2xl md:leading-14">CALCULADORA</h2>
   </article>
@@ -30,58 +24,53 @@
     <div class="element">
       <label for="marca" class=" mb-1 text-lg md:text-xl md:font-semibold font-normal">Marca:</label><br>
       <div class="flex items-center">
-        <select name="marca" id="marca"
-          class="w-[80%] p-2 text-black rounded-md bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <select name="marca" id="marca" class="w-[80%] p-2 select select-primary">
           <option value="samsung">Samsung</option>
           <option value="xiaomi">Xiaomi</option>
           <option value="apple">Apple</option>
           <option value="huawei">Huawei</option>
         </select>
-        <p class="text-emerald-500 w-[20%] text-right">+ 0€</p>
+        <p class="text-accent w-[20%] text-right">+ 0€</p>
       </div>
     </div>
     <div class="element">
       <label for="serie" class=" mb-1 text-lg md:text-xl md:font-semibold font-normal">Serie:</label><br>
-      <div class="flex items-center">
-        <select name="marca" id="marca"
-          class="w-[80%] p-2 text-black rounded-md bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+      <div class="flex items-center ">
+        <select name="marca" id="marca" class="w-[80%] select select-primary">
           <option value="samsung">Samsung</option>
           <option value="xiaomi">Xiaomi</option>
           <option value="apple">Apple</option>
           <option value="huawei">Huawei</option>
         </select>
-        <p class="text-emerald-500 w-[20%] text-right">+ 0€</p>
+        <p class="text-accent w-[20%] text-right">+ 0€</p>
       </div>
     </div>
     <div class="element">
       <label for="modelo" class=" mb-1 text-lg md:text-xl md:font-semibold font-normal">Modelo:</label><br>
       <div class="flex items-center">
-        <select name="marca" id="marca"
-          class="w-[80%] p-2 text-black rounded-md bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <select name="marca" id="marca" class="w-[80%] select select-primary">
           <option value="samsung">Samsung</option>
           <option value="xiaomi">Xiaomi</option>
           <option value="apple">Apple</option>
           <option value="huawei">Huawei</option>
         </select>
-        <p class="text-emerald-500 w-[20%] text-right">+ 0€</p>
+        <p class="text-accent w-[20%] text-right">+ 0€</p>
       </div>
     </div>
     <div class="element">
       <label for="recambios" class=" mb-1 text-lg md:text-xl md:font-semibold font-normal">Recambios:</label><br>
       <div class="flex items-center">
-        <select name="marca" id="marca"
-          class="w-[80%] p-2 text-black rounded-md bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <select name="marca" id="marca" class="w-[80%] p-2 select select-primary">
           <option value="samsung">Samsung</option>
           <option value="xiaomi">Xiaomi</option>
           <option value="apple">Apple</option>
           <option value="huawei">Huawei</option>
         </select>
-        <p class="text-emerald-500 w-[20%] text-right">+ 0€</p>
+        <p class="text-accent w-[20%] text-right">+ 0€</p>
       </div>
     </div>
-    <div class="text-center mt-4">
-      <button type="submit"
-        class="px-6 py-2 rounded-full bg-blue-500 hover:bg-blue-600 transition-colors text-white font-semibold">
+    <div class="text-center m-4">
+      <button type="submit" class="px-6 py-2  btn btn-primary">
         Calcular
       </button>
     </div>

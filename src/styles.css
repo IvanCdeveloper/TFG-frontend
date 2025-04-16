@@ -1,8 +1,11 @@
 @import "tailwindcss";
-body{
+@plugin "daisyui";
+
+body {
   margin: 0;
-  width: 100vw;
+
   padding: 0;
   min-height: 100vh;
-  background-color: rgb(14, 14, 14)
+
+  /* background-color: rgb(14, 14, 14) */
 }

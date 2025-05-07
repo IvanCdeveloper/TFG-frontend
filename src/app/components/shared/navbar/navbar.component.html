@@ -200,7 +200,7 @@
 
 
 
-    <a class="user hidden rounded-md transition btn  p-1 w-[50px] h-[50px]" routerLink="/auth">
+    <a class="user hidden rounded-md transition btn  p-1 w-[50px] h-[50px]" routerLink="/user">
       <svg width="36px" height="36px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
           d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"
@@ -210,7 +210,7 @@
       </svg>
     </a>
 
-    <a class=" rounded-md transition btn ml-2 p-1 w-[50px] h-[50px]" routerLink="/auth">
+    <a class=" rounded-md transition btn ml-2 p-1 w-[50px] h-[50px]" (click)="authService.logout()">
       <svg width="36px" height="36px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M15 4H18C19.1046 4 20 4.89543 20 6V18C20 19.1046 19.1046 20 18 20H15M8 8L4 12M4 12L8 16M4 12L16 12"
           stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -218,7 +218,7 @@
     </a>
   </div>
 
-  } @else{
+  } @else if(authService.authStatus() === 'not-authenticated'){
   <a class="login p-2 rounded-md transition" routerLinkActive="hover" routerLink="/auth"><span>Iniciar Sesión</span>
 
     <svg width="36" height="36" viewBox="0 0 58 58" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -229,5 +229,7 @@
         d="M9.66667 31.4167C8.33198 31.4167 7.25 30.3347 7.25 29C7.25 27.6653 8.33198 26.5833 9.66667 26.5833H30.4157L27.2912 23.4588C26.3474 22.5151 26.3474 20.9849 27.2912 20.0412C28.2349 19.0974 29.7651 19.0974 30.7088 20.0412L37.9588 27.2912C38.9026 28.2349 38.9026 29.7651 37.9588 30.7088L30.7088 37.9588C29.7651 38.9026 28.2349 38.9026 27.2912 37.9588C26.3474 37.0151 26.3474 35.4849 27.2912 34.5412L30.4157 31.4167H9.66667Z"
         fill="currentColor" />
     </svg> </a>
+  } @else {
+  <a class="btn">...</a>
   }
 </nav>

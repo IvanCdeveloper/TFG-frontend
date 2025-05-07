@@ -15,14 +15,18 @@ const baseUrl = environment.baseUrl;
 export class AuthService {
 
 
+
+
+
   private _authStatus = signal<AuthStatus>('checking');
 
   private _user = signal<User | null>(null);
 
-  private _token = signal<string | null>(null);
+  private _token = signal<string | null>(localStorage.getItem('token'));
 
   checkStatusResource = rxResource({
-    loader: () => this.checkStatus()
+    loader: () => this.checkStatus(),
+    defaultValue: false
   });
 
 
@@ -42,7 +46,7 @@ export class AuthService {
   })
 
   user = computed(() => this._user());
-  token = computed(() => this._token);
+  token = computed(this._token);
 
 
 
@@ -67,9 +71,9 @@ export class AuthService {
     }
 
     return this.http.get<AuthResponse>(`${baseUrl}/auth/check-status`, {
-      headers: {
+      /* headers: {
         Authorization: `Bearer ${token}`
-      }
+      } */
     }).pipe(
       map((resp) => this.handleAuthSuccess(resp)),
       catchError((error: any) => this.handleAuthError(error))
@@ -80,6 +84,7 @@ export class AuthService {
     this._user.set(null);
     this._authStatus.set('not-authenticated');
     this._token.set(null);
+    localStorage.removeItem('token')
   }
 
   private handleAuthSuccess(resp: AuthResponse) {

@@ -3,13 +3,16 @@ import { PresupuestoPageComponent } from './pages/presupuesto-page/presupuesto-p
 import { ReparacionesPageComponent } from './pages/reparaciones-page/reparaciones-page.component';
 import { ContactarPageComponent } from './pages/contactar-page/contactar-page.component';
 import { PageIndexComponent } from './pages/page-index/page-index.component';
+import { NotAuthenticatedGuard } from './auth/guards/not-authenticated.guard';
 
 export const routes: Routes = [
 
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.routes'),
-    //TODO: Guards
+    canMatch: [
+      NotAuthenticatedGuard
+    ]
   },
   {
     path: 'presupuesto',

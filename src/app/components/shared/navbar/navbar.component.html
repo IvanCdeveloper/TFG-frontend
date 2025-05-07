@@ -18,6 +18,7 @@
     animation: enhance-scroll linear both;
     animation-timeline: scroll(root);
     animation-range: 0 200px;
+    z-index: 20;
   }
 
   .logo {
@@ -27,19 +28,22 @@
 
 
   ul {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
+    width: 43%;
     list-style: none;
-    width: 50%;
-    overflow: hidden;
-
+    padding: 0;
     gap: 10%;
     justify-content: space-between;
-    margin: 5px;
-    margin-left: 90px;
-    padding: 0;
+    margin: 0;
+    overflow: hidden;
     animation: enhance linear both;
     animation-timeline: scroll(root);
     animation-range: 0 200px;
+
+
   }
 
   li {
@@ -80,21 +84,55 @@
       display: none;
     }
 
+
+
     img {
       width: 30px;
     }
 
     ul {
       margin-left: 0;
-      width: 70%;
+      width: 50%;
       margin: 6px;
       gap: 0;
+      position: static;
+      transform: translateX(0%);
     }
 
     li {
       width: 100%;
       text-align: center;
     }
+
+
+  }
+
+  @media (max-width: 450px) {
+    .presupuesto {
+      display: none;
+    }
+
+    ul {
+      width: 120px;
+    }
+  }
+
+  @media(max-width: 1200px) {
+    .email {
+      display: none;
+    }
+
+    .logo {
+      margin: 0px
+    }
+
+    .user {
+      display: inline-flex;
+    }
+
+
+
+
   }
 
   @keyframes enhance-scroll {
@@ -123,6 +161,10 @@
 
 
   }
+
+  .user:hover {
+    background-color: var(--color-accent) !important;
+  }
 </style>
 
 <nav class="bg-base-300">
@@ -143,10 +185,40 @@
     </svg>
   </a>
   <ul class="px-2 bg-base-100 rounded-2xl">
-    <li class="p-2 rounded-md transition" routerLinkActive="hover" routerLink="/presupuesto">Presupuesto</li>
-    <li class="p-2 rounded-md transition" routerLinkActive="hover" routerLink="/reparaciones">Reparaciones</li>
+    <li class="p-2 rounded-md transition presupuesto " routerLinkActive="hover" routerLink="/presupuesto">
+      Presupuesto
+    </li>
+    <li class="p-2 rounded-md transition reparations" routerLinkActive="hover" routerLink="/reparaciones">Reparaciones
+    </li>
     <li class="p-2 rounded-md transition contact" routerLinkActive="hover" routerLink="/contactar">Contactar</li>
   </ul>
+
+  @if(authService.authStatus() === 'authenticated') {
+  <div class="right-buttons">
+    <button
+      class="btn m-2 hover:btn-accent transition inline email max-w-[220px] overflow-clip overflow-ellipsis font-[Gill Sans MT] font-normal text-xl ">{{authService.user()?.username}}</button>
+
+
+
+    <a class="user hidden rounded-md transition btn  p-1 w-[50px] h-[50px]" routerLink="/auth">
+      <svg width="36px" height="36px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"
+          stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z" stroke="#ffffff" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </a>
+
+    <a class=" rounded-md transition btn ml-2 p-1 w-[50px] h-[50px]" routerLink="/auth">
+      <svg width="36px" height="36px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M15 4H18C19.1046 4 20 4.89543 20 6V18C20 19.1046 19.1046 20 18 20H15M8 8L4 12M4 12L8 16M4 12L16 12"
+          stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </a>
+  </div>
+
+  } @else{
   <a class="login p-2 rounded-md transition" routerLinkActive="hover" routerLink="/auth"><span>Iniciar Sesión</span>
 
     <svg width="36" height="36" viewBox="0 0 58 58" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -157,4 +229,5 @@
         d="M9.66667 31.4167C8.33198 31.4167 7.25 30.3347 7.25 29C7.25 27.6653 8.33198 26.5833 9.66667 26.5833H30.4157L27.2912 23.4588C26.3474 22.5151 26.3474 20.9849 27.2912 20.0412C28.2349 19.0974 29.7651 19.0974 30.7088 20.0412L37.9588 27.2912C38.9026 28.2349 38.9026 29.7651 37.9588 30.7088L30.7088 37.9588C29.7651 38.9026 28.2349 38.9026 27.2912 37.9588C26.3474 37.0151 26.3474 35.4849 27.2912 34.5412L30.4157 31.4167H9.66667Z"
         fill="currentColor" />
     </svg> </a>
+  }
 </nav>

@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router, RouterLink } from '@angular/router';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -29,13 +30,22 @@ export class LoginPageComponent {
       this.hasError.set(true)
       setTimeout(() => {
         this.hasError.set(false);
-      }, 5000);
+      }, 3000);
       return;
     }
 
     const { email, password } = this.loginForm.value;
-    this.authService.login(email!, password!).subscribe(resp => {
-      console.log(resp);
+    this.authService.login(email!, password!).subscribe((isAuthenticated) => {
+      if (isAuthenticated) {
+        this.router.navigateByUrl('/');
+      }
+
+      setTimeout(() => {
+        this.hasError.set(false);
+      }, 3000);
     })
   }
+
+
+
 }

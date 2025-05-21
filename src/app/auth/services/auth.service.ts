@@ -61,6 +61,17 @@ export class AuthService {
       catchError((error: any) => this.handleAuthError(error))
     )
   }
+  register(username: string, email: string, password: string, password2: string): Observable<boolean> {
+    return this.http.post<AuthResponse>(`${baseUrl}/auth/register`, {
+      username: username,
+      email: email,
+      password: password,
+      password2: password2,
+    }).pipe(
+      map((resp) => this.handleAuthSuccess(resp)),
+      catchError((error: any) => this.handleAuthError(error))
+    )
+  }
 
 
   checkStatus(): Observable<boolean> {
@@ -79,6 +90,8 @@ export class AuthService {
       catchError((error: any) => this.handleAuthError(error))
     );
   }
+
+
 
   logout() {
     this._user.set(null);

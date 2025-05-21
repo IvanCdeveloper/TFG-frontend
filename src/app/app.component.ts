@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
-import { NavbarComponent } from "./components/shared/navbar/navbar.component";
-import { PageIndexComponent } from "./pages/page-index/page-index.component";
+import { RouterOutlet } from '@angular/router';
+import { NavbarComponent } from "./shared/navbar/navbar.component";
+
 
 
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavbarComponent, RouterLink, PageIndexComponent],
+  imports: [RouterOutlet, NavbarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

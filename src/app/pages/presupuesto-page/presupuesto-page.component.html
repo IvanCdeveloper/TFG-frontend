@@ -20,54 +20,51 @@
   <article class="p-4 ">
     <h2 class="text-center text-lg font-semibold leading-7 md:text-2xl md:leading-14">CALCULADORA</h2>
   </article>
-  <form action="" method="post" class="px-12 flex flex-col gap-6">
+  <form class="px-12 flex flex-col gap-6" (ngSubmit)="onSubmit()" [formGroup]="presupuestoForm">
     <div class="element">
       <label for="marca" class=" mb-1 text-lg md:text-xl md:font-semibold font-normal">Marca:</label><br>
       <div class="flex items-center">
-        <select name="marca" id="marca" class="w-[80%] p-2 select select-primary">
-          <option value="samsung">Samsung</option>
-          <option value="xiaomi">Xiaomi</option>
-          <option value="apple">Apple</option>
-          <option value="huawei">Huawei</option>
+        <select name="marca" id="marca" class="w-[100%] p-2 select select-primary" (click)="obtainbrands()"
+          (change)="onMarcaChange($event)">
+          <option value="marca" disabled selected>Selecciona una marca</option>
+          @for (brand of brands(); track $index) {
+          <option value="{{brand}}">{{ brand }}</option>
+          }
+
         </select>
-        <p class="text-accent w-[20%] text-right">+ 0€</p>
+
       </div>
     </div>
-    <div class="element">
-      <label for="serie" class=" mb-1 text-lg md:text-xl md:font-semibold font-normal">Serie:</label><br>
-      <div class="flex items-center ">
-        <select name="marca" id="marca" class="w-[80%] select select-primary">
-          <option value="samsung">Samsung</option>
-          <option value="xiaomi">Xiaomi</option>
-          <option value="apple">Apple</option>
-          <option value="huawei">Huawei</option>
-        </select>
-        <p class="text-accent w-[20%] text-right">+ 0€</p>
-      </div>
-    </div>
+
     <div class="element">
       <label for="modelo" class=" mb-1 text-lg md:text-xl md:font-semibold font-normal">Modelo:</label><br>
       <div class="flex items-center">
-        <select name="marca" id="marca" class="w-[80%] select select-primary">
-          <option value="samsung">Samsung</option>
-          <option value="xiaomi">Xiaomi</option>
-          <option value="apple">Apple</option>
-          <option value="huawei">Huawei</option>
+        <select name="modelo" id="modelo" class="w-[100%] select select-primary"
+          (click)="obtainmodels(this.brandSelected())" (change)="onModelChange($event)">
+          <option disabled selected>Selecciona un modelo</option>
+          @for (modelo of models(); track modelo) {
+          <option [value]="modelo">{{ modelo }}</option>
+          }
         </select>
-        <p class="text-accent w-[20%] text-right">+ 0€</p>
+
       </div>
     </div>
     <div class="element">
       <label for="recambios" class=" mb-1 text-lg md:text-xl md:font-semibold font-normal">Recambios:</label><br>
-      <div class="flex items-center">
-        <select name="marca" id="marca" class="w-[80%] p-2 select select-primary">
-          <option value="samsung">Samsung</option>
-          <option value="xiaomi">Xiaomi</option>
-          <option value="apple">Apple</option>
-          <option value="huawei">Huawei</option>
-        </select>
-        <p class="text-accent w-[20%] text-right">+ 0€</p>
+      @if (modelSelected()) {
+      <div class="flex flex-wrap gap-2">
+        @for (part of parts(); track $index) {
+        <label class="inline items-center w-[80%]">
+          <input type="checkbox" [checked]="isPartSelected(part)" [value]="part.name" [name]="part.id" [id]="part.id"
+            class="mr-2" (change)="onCheckboxChange($event, part)">
+          {{part.name}}
+        </label>
+        <p class="text-accent w-[15%] text-right">+ {{ isPartSelected(part) ? part.price : 0 }}€</p>
+        }
+        <label for="totalprice" class="inline items-center w-[80%] my-5">Total</label>
+        <p class="text-accent w-[15%] text-right my-5">+ {{price()}}€</p>
       </div>
+      }
     </div>
     <div class="text-center m-4">
       <button type="submit" class="px-6 py-2  btn btn-primary">

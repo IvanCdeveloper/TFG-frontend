@@ -4,7 +4,12 @@ import { Observable } from 'rxjs';
 import { Part } from '../../repairs/interfaces/part.interface';
 import { Repair } from '../../repairs/interfaces/repair.interface';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { RepairService } from '../../repairs/services/repair.service';
+import { environment } from '../../environments/environment';
 
+
+const baseUrl = environment.baseUrl;
 @Component({
   selector: 'app-presupuesto-page',
   imports: [ReactiveFormsModule],
@@ -15,6 +20,8 @@ export class PresupuestoPageComponent {
 
   private http = inject(HttpClient);
   private fb = inject(FormBuilder)
+  private router = inject(Router);
+  private repairService = inject(RepairService)
 
   presupuestoForm = this.fb.group({
     brand: [''],
@@ -33,14 +40,14 @@ export class PresupuestoPageComponent {
   );
 
   obtainbrands() {
-    this.http.get<any[]>('http://localhost:8080/parts/brands').subscribe((data) => {
+    this.http.get<any[]>(`${baseUrl}/parts/brands`).subscribe((data) => {
       console.log('BRANDS:', data);
       this.brands.set(data);
     });
   }
 
   obtainmodels(marca: string) {
-    this.http.get<any[]>('http://localhost:8080/parts/models', {
+    this.http.get<any[]>(`${baseUrl}/parts/models`, {
       params: { brand: marca }
     }).subscribe((data) => {
       console.log('MODELS:', data);
@@ -48,7 +55,7 @@ export class PresupuestoPageComponent {
     });
   }
   obtainparts(marca: string, modelo: string) {
-    this.http.get<any[]>('http://localhost:8080/parts', {
+    this.http.get<any[]>(`${baseUrl}/parts`, {
       params: { brand: marca, model: modelo }
     }).subscribe((data) => {
       console.log('PARTS:', data);
@@ -115,11 +122,18 @@ export class PresupuestoPageComponent {
       duration: 'PT2H30M',
     };
 
-    this.http.post<Repair>('http://localhost:8080/repairs', payload)
+    this.http.post<Repair>(`${baseUrl}/repairs`, payload)
       .subscribe({
-        next: (resp) => console.log('Reparación creada:', resp),
+        next: (resp) => {
+          console.log('Reparación creada:', resp)
+          this.repairService.loadUserRepairs()
+        },
         error: (err) => console.error('Error al crear reparación:', err)
       });
+
+
+
+    this.router.navigateByUrl("/reparaciones");
   }
 
 

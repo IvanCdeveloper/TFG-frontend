@@ -8,5 +8,5 @@ export const environment = {
   giphyApiKey: '',
 
   //URLS
-  baseUrl: 'http://localhost:8080'
+  baseUrl: 'https://ivancuarteros.com/api'
 }

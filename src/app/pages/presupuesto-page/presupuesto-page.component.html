@@ -56,7 +56,7 @@
         @for (part of parts(); track $index) {
         <label class="inline items-center w-[80%]">
           <input type="checkbox" [checked]="isPartSelected(part)" [value]="part.name" [name]="part.id" [id]="part.id"
-            class="mr-2" (change)="onCheckboxChange($event, part)">
+            class="mr-2 checkbox checkbox-accent" (change)="onCheckboxChange($event, part)">
           {{part.name}}
         </label>
         <p class="text-accent w-[15%] text-right">+ {{ isPartSelected(part) ? part.price : 0 }}€</p>
@@ -68,7 +68,7 @@
     </div>
     <div class="text-center m-4">
       <button type="submit" class="px-6 py-2  btn btn-primary">
-        Calcular
+        Guardar
       </button>
     </div>
   </form>

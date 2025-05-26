@@ -3,7 +3,7 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import type { User } from '../interfaces/user.interface';
 import { environment } from '../../environments/environment';
 import { AuthResponse } from '../interfaces/auth-response.interface';
-import { catchError, map, Observable, of, tap, } from 'rxjs';
+import { catchError, map, Observable, of, tap, throwError, } from 'rxjs';
 import { rxResource } from '@angular/core/rxjs-interop';
 
 
@@ -110,8 +110,8 @@ export class AuthService {
     return true;
   }
 
-  private handleAuthError(error: any) {
+  private handleAuthError(error: any): Observable<never> {
     this.logout();
-    return of(false);
+    return throwError(() => error);
   }
 }

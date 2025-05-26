@@ -17,6 +17,10 @@ export class RegisterPageComponent {
   router = inject(Router);
 
 
+
+
+
+
   registerForm = this.fb.group({
     username: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
@@ -26,22 +30,70 @@ export class RegisterPageComponent {
 
   onSubmit() {
     if (this.registerForm.invalid) {
-      this.hasError.set(true)
-      setTimeout(() => {
-        this.hasError.set(false);
-      }, 3000);
+      const formErrors: { [key: string]: string } = {};
+
+      if (this.registerForm.get('username')?.errors?.['required']) {
+        formErrors['username'] = 'El nombre de usuario es obligatorio';
+      }
+
+      if (this.registerForm.get('email')?.errors?.['required']) {
+        formErrors['email'] = 'El correo es obligatorio';
+      } else if (this.registerForm.get('email')?.errors?.['email']) {
+        formErrors['email'] = 'El correo no tiene un formato válido';
+      }
+
+      if (this.registerForm.get('password')?.errors?.['required']) {
+        formErrors['password'] = 'La contraseña es obligatoria';
+      } else if (this.registerForm.get('password')?.errors?.['minlength']) {
+        formErrors['password'] = 'Debe tener al menos 4 caracteres';
+      }
+
+      if (this.registerForm.get('password2')?.errors?.['required']) {
+        formErrors['password2'] = 'Confirma tu contraseña';
+      } else if (this.registerForm.get('password2')?.errors?.['minlength']) {
+        formErrors['password2'] = 'Debe tener al menos 4 caracteres';
+      }
+
+      this.setFormErrors(formErrors);
       return;
     }
 
-    const { username, email, password, password2 } = this.registerForm.value;
-    this.authService.register(username!, email!, password!, password2!).subscribe((isAuthenticated) => {
-      if (isAuthenticated) {
-        this.router.navigateByUrl('/');
-      }
 
-      setTimeout(() => {
-        this.hasError.set(false);
-      }, 3000);
+
+
+    const { username, email, password, password2 } = this.registerForm.value;
+    this.authService.register(username!, email!, password!, password2!).subscribe({
+      next: (isAuthenticated) => {
+        if (isAuthenticated) {
+          this.router.navigateByUrl('/');
+        }
+
+        setTimeout(() => {
+          this.hasError.set(false);
+        }, 3000);
+
+      },
+      error: (httpError) => {
+        console.log('HTTP Error:', httpError);
+        console.log('Body:', httpError.error);
+
+        // httpError.error debe ser tu objeto { email: "..." }
+        if (httpError.status === 400 && httpError.error && typeof httpError.error === 'object') {
+          this.setFormErrors(httpError.error);
+        } else {
+          this.hasError.set(true);
+        }
+      }
     })
+  }
+
+  setFormErrors(errors: { [key: string]: string }) {
+    console.log("setFormErrors", errors);
+    Object.keys(errors).forEach((field) => {
+      const control = this.registerForm.get(field);
+      if (control) {
+        control.setErrors({ server: errors[field] });
+      }
+    });
   }
 }

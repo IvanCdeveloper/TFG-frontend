@@ -12,8 +12,15 @@
         <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
       </g>
     </svg>
-    <input type="email" placeholder="mail@site.com" required formControlName="email" />
+    <input type="email" placeholder="Correo" required formControlName="email" />
   </label>
+
+  @if (loginForm.get('email')?.errors?.['server']) {
+  <div class="text-red-500 text-sm">
+    {{ loginForm.get('email')?.errors?.['server'] }}
+  </div>
+  }
+
 
   <label class="input input-primary-content input-lg validator">
     <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -27,6 +34,19 @@
     <!-- pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" -->
     <input type="password" required placeholder="Password" minlength="4" formControlName="password" />
   </label>
+
+  @if (loginForm.get('password')?.errors?.['server']) {
+  <div class="text-red-500 text-sm">
+    {{ loginForm.get('password')?.errors?.['server'] }}
+  </div>
+  }
+  @if(generalError()){
+
+  <div class="text-red-500 text-sm mt-2">
+    {{ generalError() }}
+  </div>
+  }
+
 
   <button type="submit" class="btn btn-primary">Login</button>
 
@@ -43,12 +63,3 @@
 
 
 </form>
-@if(hasError()) {
-<div role="alert" class="alert alert-error animate-fadeIn w-64 bottom-6 fixed">
-  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-      d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>
-  <span>Usuario o contraseña incorrectos</span>
-</div>
-}

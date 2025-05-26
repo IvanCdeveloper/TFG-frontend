@@ -14,6 +14,12 @@
     </svg>
     <input type="text" placeholder="Nombre" required formControlName="username" />
   </label>
+
+  @if (registerForm.get('username')?.errors?.['server']) {
+  <div class="text-red-500 text-sm">
+    {{ registerForm.get('username')?.errors?.['server'] }}
+  </div>
+  }
   <label class="input input-primary-content input-lg validator join-item">
     <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
       <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
@@ -23,6 +29,12 @@
     </svg>
     <input type="email" placeholder="Email" required formControlName="email" />
   </label>
+
+  @if (registerForm.get('email')?.errors?.['server']) {
+  <div class="text-red-500 text-sm">
+    {{ registerForm.get('email')?.errors?.['server'] }}
+  </div>
+  }
 
   <label class="input input-primary-content input-lg validator">
     <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -36,6 +48,12 @@
     <!-- pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" -->
     <input type="password" required placeholder="Contraseña" minlength="4" formControlName="password" />
   </label>
+
+  @if (registerForm.get('password')?.errors?.['server']) {
+  <div class="text-red-500 text-sm">
+    {{ registerForm.get('password')?.errors?.['server'] }}
+  </div>
+  }
   <label class="input input-primary-content input-lg validator">
     <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
       <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
@@ -48,6 +66,19 @@
     <!-- pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" -->
     <input type="password" required placeholder="Repetir contraseña" minlength="4" formControlName="password2" />
   </label>
+
+
+  @if (registerForm.get('password2')?.errors?.['server']) {
+  <div class="text-red-500 text-sm">
+    {{ registerForm.get('password2')?.errors?.['server'] }}
+  </div>
+  }
+
+  @if (registerForm.get('error')?.errors?.['server']) {
+  <div class="text-red-500 text-sm">
+    {{ registerForm.get('error')?.errors?.['server'] }}
+  </div>
+  }
 
   <button type="submit" class="btn btn-primary">Crear Cuenta</button>
 

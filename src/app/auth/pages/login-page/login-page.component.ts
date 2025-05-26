@@ -18,6 +18,11 @@ export class LoginPageComponent {
   isPosting = signal(false);
   authService = inject(AuthService);
   router = inject(Router);
+  generalError = signal<string | null>(null);
+
+
+
+
 
 
   loginForm = this.fb.group({
@@ -27,25 +32,64 @@ export class LoginPageComponent {
 
   onSubmit() {
     if (this.loginForm.invalid) {
-      this.hasError.set(true)
-      setTimeout(() => {
-        this.hasError.set(false);
-      }, 3000);
+
+      const formErrors: { [key: string]: string } = {};
+
+      if (this.loginForm.get('email')?.errors?.['required']) {
+        formErrors['email'] = 'El correo es obligatorio';
+      } else if (this.loginForm.get('email')?.errors?.['email']) {
+        formErrors['email'] = 'El correo no tiene un formato válido';
+      }
+
+      if (this.loginForm.get('password')?.errors?.['required']) {
+        formErrors['password'] = 'La contraseña es obligatoria';
+      } else if (this.loginForm.get('password')?.errors?.['minlength']) {
+        formErrors['password'] = 'Debe tener al menos 4 caracteres';
+      }
+      this.setFormErrors(formErrors);
       return;
     }
 
     const { email, password } = this.loginForm.value;
-    this.authService.login(email!, password!).subscribe((isAuthenticated) => {
-      if (isAuthenticated) {
-        this.router.navigateByUrl('/');
-      }
+    this.authService.login(email!, password!).subscribe({
+      next: (isAuthenticated) => {
+        if (isAuthenticated) {
+          this.router.navigateByUrl('/');
+        }
 
-      setTimeout(() => {
-        this.hasError.set(false);
-      }, 3000);
-    })
+        setTimeout(() => {
+          this.hasError.set(false);
+        }, 3000);
+      },
+      error: (httpError) => {
+        console.log('HTTP Error:', httpError);
+        console.log('Body:', httpError.error);
+
+        // httpError.error debe ser tu objeto { email: "..." }
+        if (httpError.status === 400 && httpError.error && typeof httpError.error === 'object') {
+          this.setFormErrors(httpError.error);
+        } else if (httpError.status === 403) {
+          // ❗ Aquí manejas credenciales incorrectas
+          this.generalError.set('Credenciales incorrectas');
+        } else {
+          this.hasError.set(true);
+        }
+      }
+    });
   }
 
+
+
+
+  setFormErrors(errors: { [key: string]: string }) {
+    console.log("setFormErrors", errors);
+    Object.keys(errors).forEach((field) => {
+      const control = this.loginForm.get(field);
+      if (control) {
+        control.setErrors({ server: errors[field] });
+      }
+    });
+  }
 
 
 }

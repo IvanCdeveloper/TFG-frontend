@@ -1,61 +1,67 @@
 {
-  "hash": "3f17cfcb",
-  "configHash": "3ede8348",
-  "lockfileHash": "70dc16f2",
-  "browserHash": "f6c4a593",
+  "hash": "84851f89",
+  "configHash": "69221f78",
+  "lockfileHash": "43586f9a",
+  "browserHash": "b012a266",
   "optimized": {
     "@angular/common": {
       "src": "../../../../../../node_modules/@angular/common/fesm2022/common.mjs",
       "file": "@angular_common.js",
-      "fileHash": "687deecd",
+      "fileHash": "fd1c6c8f",
       "needsInterop": false
     },
     "@angular/common/http": {
       "src": "../../../../../../node_modules/@angular/common/fesm2022/http.mjs",
       "file": "@angular_common_http.js",
-      "fileHash": "be2bb39d",
+      "fileHash": "c7fb9a2b",
       "needsInterop": false
     },
     "@angular/core": {
       "src": "../../../../../../node_modules/@angular/core/fesm2022/core.mjs",
       "file": "@angular_core.js",
-      "fileHash": "7278434f",
+      "fileHash": "5d549cc4",
       "needsInterop": false
     },
     "@angular/core/rxjs-interop": {
       "src": "../../../../../../node_modules/@angular/core/fesm2022/rxjs-interop.mjs",
       "file": "@angular_core_rxjs-interop.js",
-      "fileHash": "d2adcffe",
+      "fileHash": "e486d6bf",
       "needsInterop": false
     },
     "@angular/forms": {
       "src": "../../../../../../node_modules/@angular/forms/fesm2022/forms.mjs",
       "file": "@angular_forms.js",
-      "fileHash": "680512cd",
+      "fileHash": "2d710bc2",
+      "needsInterop": false
+    },
+    "@angular/material/snack-bar": {
+      "src": "../../../../../../node_modules/@angular/material/fesm2022/snack-bar.mjs",
+      "file": "@angular_material_snack-bar.js",
+      "fileHash": "2e98b606",
       "needsInterop": false
     },
     "@angular/platform-browser": {
       "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
       "file": "@angular_platform-browser.js",
-      "fileHash": "ce6a1d19",
+      "fileHash": "0924f0eb",
       "needsInterop": false
     },
     "@angular/router": {
       "src": "../../../../../../node_modules/@angular/router/fesm2022/router.mjs",
       "file": "@angular_router.js",
-      "fileHash": "4396975b",
+      "fileHash": "a85a5988",
       "needsInterop": false
     },
     "luxon": {
       "src": "../../../../../../node_modules/luxon/src/luxon.js",
       "file": "luxon.js",
-      "fileHash": "647d8ac9",
+      "fileHash": "0d82bae7",
       "needsInterop": false
     },
     "rxjs": {
       "src": "../../../../../../node_modules/rxjs/dist/esm5/index.js",
       "file": "rxjs.js",
-      "fileHash": "49ca5c3d",
+      "fileHash": "876717d3",
       "needsInterop": false
     }
   },

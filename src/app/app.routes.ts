@@ -4,6 +4,7 @@ import { ReparacionesPageComponent } from './repairs/pages/reparaciones-page/rep
 import { ContactarPageComponent } from './pages/contactar-page/contactar-page.component';
 import { PageIndexComponent } from './pages/page-index/page-index.component';
 import { NotAuthenticatedGuard } from './auth/guards/not-authenticated.guard';
+import { AuthenticatedGuard } from './auth/guards/authenticated.guard';
 
 export const routes: Routes = [
 
@@ -20,7 +21,10 @@ export const routes: Routes = [
   },
   {
     path: 'reparaciones',
-    component: ReparacionesPageComponent
+    component: ReparacionesPageComponent,
+    canMatch: [
+      AuthenticatedGuard
+    ]
   },
   {
     path: 'contactar',

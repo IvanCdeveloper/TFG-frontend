@@ -1,0 +1,85 @@
+<style>
+
+</style>
+
+
+<article
+  class="card bg-base-200 shadow-xl hover:shadow-2xl my-6 mx-4 transition-all rounded-2xl p-6 md:p-8 lg:p-10 lg:max-w-3xl lg:mx-auto">
+
+  <!-- Header: Marca y Precio -->
+  <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8">
+    <h3 class="text-3xl lg:text-4xl font-bold text-primary">
+      {{ repairResource.value().brand }}
+    </h3>
+
+  </div>
+
+  <!-- Detalles de la reparación -->
+  <ul class="space-y-6 text-base-content">
+
+    <!-- Modelo -->
+    <li class="flex justify-between items-center bg-base-100 rounded-lg py-4 px-8 ">
+      <span class="font-semibold">Modelo:</span>
+      <span class="">{{ repairResource.value().model }}</span>
+    </li>
+
+    <!-- Piezas con DaisyUI “menu” -->
+    <li>
+      <ul class="list bg-base-100 rounded-box w-full py-4 px-8 space-y-2 text-[16px]">
+
+
+        <li class="  text-accent ">
+
+          <span class="  text-accent ">Piezas</span>
+
+        </li>
+        <div class="divider my-2"></div>
+        @for (pieza of repairResource.value().parts; track pieza.id) {
+        <li class=" ">
+
+          <span>{{ pieza.name }}</span>
+          <span class="text-accent float-end">
+            {{ pieza.price | currency:'EUR':'symbol':'1.2-2':'es' }}
+          </span>
+
+        </li>
+        }
+        <li class=" text-lg"> Total:
+          <span class="text-accent float-end">
+            {{repairResource.value().price | currency:'EUR':'symbol':'1.2-2':'es' }}
+          </span>
+        </li>
+      </ul>
+    </li>
+
+    <!-- Duración y acción de eliminar -->
+    <li class="flex flex-row bg-base-100 rounded-lg  py-4 px-8">
+      <div>
+        <span>Duración:</span>
+        <span> {{ service.formatDuration(repairResource.value().duration) }}</span>
+      </div>
+    </li>
+
+    <button (click)="openDeleteModal(repairResource.value().id)" class="btn  btn-error" title="Eliminar reparación">
+      Eliminar
+    </button>
+  </ul>
+
+  <button class="btn  btn-primary mt-6" title="Eliminar reparación" routerLink="/reparaciones">
+    Volver
+  </button>
+
+  <dialog id="confirmDeleteModal" class="modal">
+    <div class="modal-box">
+      <h3 class="font-bold ">¿Estás seguro?</h3>
+      <p class="py-4">Esta acción eliminará la reparación permanentemente.</p>
+      <div class="modal-action">
+        <form method="dialog">
+          <button class="btn" (click)="cancelDelete()">Cancelar</button>
+          <button class="btn btn-error ml-2" (click)="confirmDelete()">Eliminar</button>
+        </form>
+      </div>
+    </div>
+  </dialog>
+
+</article>

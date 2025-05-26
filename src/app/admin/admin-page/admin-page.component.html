@@ -1,0 +1,327 @@
+<style>
+  @media(max-width: 1000px) {
+    .badge {
+      height: 50px;
+    }
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Estilos para la tabla tipo cards en móvil */
+  @media (max-width: 768px) {
+    .table-cards {
+      display: none;
+    }
+
+    .cards-container {
+      display: block;
+    }
+
+    .repair-card {
+      background: hsl(var(--b1));
+      border: 1px solid hsl(var(--b3));
+      border-radius: 0.5rem;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.25rem 0;
+      border-bottom: 1px solid hsl(var(--b3));
+    }
+
+    .card-row:last-child {
+      border-bottom: none;
+    }
+
+    .card-label {
+      font-weight: 600;
+      color: hsl(var(--bc));
+      opacity: 0.7;
+    }
+  }
+
+  @media (min-width: 769px) {
+    .cards-container {
+      display: none;
+    }
+  }
+</style>
+
+<div class="min-h-screen bg-base-200 p-6">
+  <!-- Header -->
+  <div class="mb-8">
+    <div class="flex justify-between items-center md:flex-row flex-col gap-4 md:text-left text-center">
+      <div>
+        <h1 class="text-4xl font-bold text-base-content mb-2">Panel de Reparaciones</h1>
+        <p class="text-base-content/70">Gestiona todas las reparaciones del sistema</p>
+      </div>
+      <button class="btn btn-primary btn-lg gap-2" (click)="abrirModalNueva()">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+        </svg>
+        Nueva Reparación
+      </button>
+    </div>
+  </div>
+
+  <!-- Cards con las estadísticas -->
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
+    <div class="stat bg-base-100 rounded-2xl shadow-lg border border-base-300">
+      <div class="stat-figure text-primary">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+      </div>
+      <div class="stat-title">Total Reparaciones</div>
+      <div class="stat-value text-primary">{{repairs().length }}</div>
+    </div>
+
+    <div class="stat bg-base-100 rounded-2xl shadow-lg border border-base-300">
+      <div class="stat-figure text-success">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+        </svg>
+      </div>
+      <div class="stat-title">Ingresos Total</div>
+      <div class="stat-value text-success">{{ ingresoTotal()|
+        currency:'EUR':'symbol':'1.2-2':'es' }}</div>
+    </div>
+
+    <div class="stat bg-base-100 rounded-2xl shadow-lg border border-base-300">
+      <div class="stat-figure text-warning">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+      <div class="stat-title">Tiempo Promedio</div>
+      <div class="stat-value text-warning">{{ tiempoPromedio() }}</div>
+    </div>
+
+    <div class="stat bg-base-100 rounded-2xl shadow-lg border border-base-300">
+      <div class="stat-figure text-info">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+        </svg>
+      </div>
+      <div class="stat-title">Precio Promedio</div>
+      <div class="stat-value text-info">{{ precioPromedio() |
+        currency:'EUR':'symbol':'1.2-2':'es' }}</div>
+    </div>
+  </div>
+
+  <!-- Filtros y Búsqueda -->
+  <div class="card bg-base-100 shadow-xl mb-8 border border-base-300">
+    <div class="card-body">
+      <div class="flex flex-col lg:flex-row gap-4">
+        <div class="form-control flex-1">
+          <label class="label">
+            <span class="label-text font-semibold">Buscar</span>
+          </label>
+          <input type="text" placeholder="Buscar por marca, modelo o parte..."
+            class="input input-bordered w-full focus:input-primary"
+            (input)="this.filtroTexto.set($any($event.target).value)">
+        </div>
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text font-semibold">Filtrar por Marca</span>
+          </label>
+          <select class="select select-bordered focus:select-primary" (click)="getBrands()"
+            (change)="onFilterBrandChange($event)">
+            <option value="">Todas las marcas</option>
+            @for (marca of brands(); track marca) {
+            <option [value]="marca">{{ marca }}</option>
+            }
+          </select>
+        </div>
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text font-semibold">Ordenar por</span>
+          </label>
+          <select class="select select-bordered focus:select-primary" (change)="onSortFieldSelected($event)">
+
+            <option value="id">ID</option>
+            <option value="brand">Marca</option>
+            <option value="price">Precio</option>
+            <option value="duration">Duración</option>
+
+
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabla de Reparaciones -->
+  <div class="mb-8">
+    <div class="table-responsive">
+      <table class="table table-zebra w-full min-w-max">
+        <thead class="bg-base-200">
+          <tr>
+            <th class="text-base-content font-bold whitespace-nowrap">ID</th>
+            <th class="text-base-content font-bold whitespace-nowrap">Marca</th>
+            <th class="text-base-content font-bold whitespace-nowrap">Modelo</th>
+            <th class="text-base-content font-bold whitespace-nowrap">Parte</th>
+            <th class="text-base-content font-bold whitespace-nowrap">Precio</th>
+            <th class="text-base-content font-bold whitespace-nowrap">Duración</th>
+            <th class="text-base-content font-bold text-center whitespace-nowrap">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (repair of reparacionesFiltradas(); track repair.id) {
+          <tr class="hover:bg-base-200 transition-colors">
+            <td class="font-mono text-sm">{{ repair.id }}</td>
+            <td>
+              <div class="badge badge-outline badge-primary">{{ repair.brand }}</div>
+            </td>
+            <td class="font-medium">{{ repair.model }}</td>
+            <td>
+              <div class="badge badge-secondary badge-outline">{{repairService.getPartsNames(repair.parts) }}</div>
+            </td>
+            <td class="font-bold text-success">{{ repair.price |
+              currency:'EUR':'symbol':'1.2-2':'es' }}</td>
+            <td>
+              <div class="badge badge-accent badge-outline">{{repairService.formatDuration(repair.duration) }}</div>
+            </td>
+            <td>
+              <div class="flex gap-2 justify-center">
+
+                <button class="btn btn-sm btn-warning btn-outline tooltip" data-tip="Editar"
+                  (click)="editarReparacion(repair)">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                  </svg>
+                </button>
+                <button class="btn btn-sm btn-error btn-outline tooltip" data-tip="Eliminar"
+                  (click)="openDeleteModal($event, repair.id)">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+          } @empty {
+          <tr>
+            <td colspan="7" class="text-center py-8">
+              <div class="flex flex-col items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-base-content/30" fill="none"
+                  viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                <span class="text-base-content/60">No se encontraron reparaciones</span>
+              </div>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- Modal para Nueva/Editar Reparación -->
+  @if (mostrarModal()) {
+  <div class="modal modal-open " [formGroup]="presupuestoForm">
+    <div class="modal-box max-w-2xl">
+      <h3 class="font-bold text-2xl mb-6">
+        {{ modoEdicion() ? 'Editar' : 'Nueva' }} Reparación
+      </h3>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text font-semibold">Marca</span>
+          </label>
+          <select class="select select-bordered focus:select-primary float-end" (click)="getBrands()"
+            formControlName="brand" (change)="onBrandChange($event)">
+            <option disabled selected value="">Selecciona una marca</option>
+            @for (marca of brands(); track marca) {
+            <option [value]="marca">{{ marca }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text font-semibold">Modelo</span>
+          </label>
+          <select placeholder="Models" class="select select-bordered focus:select-primary float-end"
+            formControlName="model" (click)="getModels(this.brandSelected())" (change)="onModelChange($event)">
+            <option disabled selected value="">Selecciona un modelo</option>
+            @for (modelo of models(); track modelo) {
+            <option [value]="modelo">{{ modelo }}</option>
+            }
+          </select>
+        </div>
+        @if (modelSelected()) {
+        <div class="form-control">
+
+          <div class="flex flex-wrap gap-2">
+            @for (part of parts(); track $index) {
+            <label class="inline items-center w-[100%]">
+              <input type="checkbox" [checked]="isPartSelected(part)" [value]="part.name" [name]="part.id"
+                [id]="part.id" class="mr-2 checkbox checkbox-accent " (change)="onCheckboxChange($event, part)">
+              {{part.name}}
+              <span class=" text-accent text-right float-end" [ngClass]="{ 'text-accent': isPartSelected(part) }"> {{
+                (isPartSelected(part)) ? '+ ' + (part.price |
+                currency:'EUR':'symbol':'1.2-2':'es') : part.price |
+                currency:'EUR':'symbol':'1.2-2':'es'
+                }}</span>
+            </label>
+            }
+            <label for="totalprice" class="inline items-center text-lg w-[100%] my-5">Total:
+              <span class="text-accent text-right  float-end">+ {{price() |
+                currency:'EUR':'symbol':'1.2-2':'es'}}</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-control">
+          <label for="end-time">Fecha fin</label>
+          <input type="datetime-local" class="input" formControlName="endTime" (change)="saveEndTime($event)">
+        </div>
+        }
+
+
+
+      </div>
+
+      <div class="modal-action">
+        <button class="btn btn-ghost" (click)="cerrarModal()">Cancelar</button>
+        <button class="btn btn-primary" (click)="guardarReparacion()">
+          {{ modoEdicion() ? 'Actualizar' : 'Crear' }}
+        </button>
+      </div>
+    </div>
+  </div>
+  }
+</div>
+
+<dialog id="confirmDeleteModal" class="modal">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg">¿Estás seguro?</h3>
+    <p class="py-4">Esta acción eliminará la reparación permanentemente.</p>
+    <div class="modal-action">
+      <form method="dialog">
+        <button class="btn" (click)="cancelDelete()">Cancelar</button>
+        <button class="btn btn-error ml-2" (click)="confirmDelete()">Eliminar</button>
+      </form>
+    </div>
+  </div>
+</dialog>

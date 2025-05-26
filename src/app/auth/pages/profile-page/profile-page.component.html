@@ -1,0 +1,14 @@
+<div class="card bg-base-300 w-60 shadow-sm m-auto mt-5">
+  <div class="avatar avatar-placeholder">
+    <div class="bg-neutral text-neutral-content w-24 rounded-full m-auto mt-4">
+      <span class="text-3xl">{{authService.user()?.username?.charAt(0)?.toUpperCase()}}</span>
+    </div>
+  </div>
+  <div class="card-body">
+    <h2 class="card-title">{{authService.user()?.username}}</h2>
+    <p>{{authService.user()?.email}}</p>
+    <div class="card-actions justify-end">
+
+    </div>
+  </div>
+</div>

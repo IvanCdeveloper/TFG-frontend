@@ -9,4 +9,5 @@ export const environment = {
 
   //URLS
   baseUrl: 'http://localhost:8080/api'
+  /*   baseUrl: 'https://ivancuarteros.com/api' */
 }

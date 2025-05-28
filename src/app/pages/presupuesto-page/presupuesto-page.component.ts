@@ -7,14 +7,15 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RepairService } from '../../repairs/services/repair.service';
 import { environment } from '../../environments/environment';
+import { CurrencyPipe } from '@angular/common';
 
 
 const baseUrl = environment.baseUrl;
 @Component({
   selector: 'app-presupuesto-page',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CurrencyPipe],
   templateUrl: './presupuesto-page.component.html',
-  styleUrl: './presupuesto-page.component.css'
+
 })
 export class PresupuestoPageComponent {
 
@@ -26,7 +27,7 @@ export class PresupuestoPageComponent {
   presupuestoForm = this.fb.group({
     brand: [''],
     model: ['']
-    // podrías añadir aquí un FormArray de parts
+
   });
 
   brands = signal<any[]>([]);
@@ -119,7 +120,7 @@ export class PresupuestoPageComponent {
       brand: this.brandSelected(),
       model: this.modelSelected(),
       parts: this.partsSelected().map(part => ({ id: part.id })),
-      duration: 'PT2H30M',
+      duration: null,
     };
 
     this.http.post<Repair>(`${baseUrl}/repairs`, payload)

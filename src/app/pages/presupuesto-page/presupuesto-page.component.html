@@ -59,10 +59,11 @@
             class="mr-2 checkbox checkbox-accent" (change)="onCheckboxChange($event, part)">
           {{part.name}}
         </label>
-        <p class="text-accent w-[15%] text-right">+ {{ isPartSelected(part) ? part.price : 0 }}€</p>
+        <p class="text-accent w-[15%] text-right">+ {{ (isPartSelected(part) ? part.price : 0 )|
+          currency:'EUR':'symbol':'1.2-2':'es' }}</p>
         }
         <label for="totalprice" class="inline items-center w-[80%] my-5">Total</label>
-        <p class="text-accent w-[15%] text-right my-5">+ {{price()}}€</p>
+        <p class="text-accent w-[15%] text-right my-5">+ {{price() | currency:'EUR':'symbol':'1.2-2':'es'}}</p>
       </div>
       }
     </div>

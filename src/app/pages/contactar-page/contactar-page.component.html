@@ -1,26 +1,63 @@
 <section class="bg-base-300 text-white md:mx-[25%] mx-10 my-10 rounded-4xl p-8 relative overflow-hidden shadow-lg">
   <h2 class="text-center text-2xl font-semibold mb-6">Contáctanos</h2>
-  <form action="" method="post" class="space-y-4">
+  <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="space-y-4">
+    <!-- Nombre -->
     <div>
       <label for="name" class="block text-lg font-medium">Nombre</label>
-      <input type="text" id="name" name="name" placeholder="Tu nombre" class="w-full input input-info">
+      <input id="name" type="text" formControlName="name" placeholder="Tu nombre" class="w-full input input-info"
+        [class.input-error]="contactForm.get('name')?.touched && contactForm.get('name')?.invalid" />
+      @if(contactForm.get('name')?.touched && contactForm.get('name')?.invalid ){
+
+      <div class="text-red-400 text-sm mt-1">
+        El nombre es obligatorio.
+      </div>
+      }
     </div>
+
+    <!-- Email -->
     <div>
       <label for="email" class="block text-lg font-medium">Correo electrónico</label>
-      <input type="email" id="email" name="email" placeholder="tu@correo.com" class="w-full input input-info">
+      <input id="email" type="email" formControlName="email" placeholder="tu@correo.com" class="w-full input input-info"
+        [class.input-error]="contactForm.get('email')?.touched && contactForm.get('email')?.invalid" />
+      @if(contactForm.get('email')?.touched && contactForm.get('email')?.invalid ){
+
+      <div class="text-red-400 text-sm mt-1">
+        El correo es obligatorio.
+      </div>
+      }
     </div>
+
+    <!-- Asunto -->
     <div>
       <label for="subject" class="block text-lg font-medium">Asunto</label>
-      <input type="text" id="subject" name="subject" placeholder="Asunto" class="w-full input input-info">
+      <input id="subject" type="text" formControlName="subject" placeholder="Asunto" class="w-full input input-info"
+        [class.input-error]="contactForm.get('subject')?.touched && contactForm.get('subject')?.invalid" />
+      @if(contactForm.get('subject')?.touched && contactForm.get('subject')?.invalid ){
+
+      <div class="text-red-400 text-sm mt-1">
+        El asunto es obligatorio.
+      </div>
+      }
     </div>
+
+    <!-- Mensaje -->
     <div>
       <label for="message" class="block text-lg font-medium">Mensaje</label>
-      <textarea id="message" name="message" rows="10" placeholder="Escribe tu mensaje aquí"
-        class="w-full input input-info"></textarea>
+      <textarea id="message" formControlName="message" rows="6" placeholder="Escribe tu mensaje aquí"
+        class="w-full textarea textarea-info"
+        [class.textarea-error]="contactForm.get('message')?.touched && contactForm.get('message')?.invalid"></textarea>
+      @if(contactForm.get('message')?.touched && contactForm.get('message')?.invalid ){
+
+      <div class="text-red-400 text-sm mt-1">
+        El mensaje es obligatorio.
+      </div>
+      }
     </div>
+
+    <!-- Botón -->
     <div class="text-center mt-6">
-      <button type="submit" class="px-8 py-3 btn btn-info">
-        Enviar mensaje
+      <button type="submit" [disabled]="contactForm.invalid || loading" class="px-8 py-3 btn btn-info">
+        {{ loading ? 'Enviando...' : 'Enviar mensaje' }}
       </button>
     </div>
   </form>

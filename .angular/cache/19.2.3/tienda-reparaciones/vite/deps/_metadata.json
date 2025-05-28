@@ -1,67 +1,73 @@
 {
-  "hash": "865d5bd0",
-  "configHash": "d2f31b8c",
+  "hash": "48b01ed4",
+  "configHash": "81666d20",
   "lockfileHash": "43586f9a",
-  "browserHash": "adce9a91",
+  "browserHash": "b4f01643",
   "optimized": {
     "@angular/common": {
       "src": "../../../../../../node_modules/@angular/common/fesm2022/common.mjs",
       "file": "@angular_common.js",
-      "fileHash": "db9bccb8",
+      "fileHash": "4f7eee90",
       "needsInterop": false
     },
     "@angular/common/http": {
       "src": "../../../../../../node_modules/@angular/common/fesm2022/http.mjs",
       "file": "@angular_common_http.js",
-      "fileHash": "5c6ce35b",
+      "fileHash": "7dd29d0e",
       "needsInterop": false
     },
     "@angular/core": {
       "src": "../../../../../../node_modules/@angular/core/fesm2022/core.mjs",
       "file": "@angular_core.js",
-      "fileHash": "0f9a27ae",
+      "fileHash": "dc26f924",
       "needsInterop": false
     },
     "@angular/core/rxjs-interop": {
       "src": "../../../../../../node_modules/@angular/core/fesm2022/rxjs-interop.mjs",
       "file": "@angular_core_rxjs-interop.js",
-      "fileHash": "5d1607d0",
+      "fileHash": "db6549ba",
       "needsInterop": false
     },
     "@angular/forms": {
       "src": "../../../../../../node_modules/@angular/forms/fesm2022/forms.mjs",
       "file": "@angular_forms.js",
-      "fileHash": "990b2b5c",
+      "fileHash": "58010daf",
       "needsInterop": false
     },
     "@angular/platform-browser": {
       "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
       "file": "@angular_platform-browser.js",
-      "fileHash": "815f1d43",
+      "fileHash": "32e489cf",
       "needsInterop": false
     },
     "@angular/router": {
       "src": "../../../../../../node_modules/@angular/router/fesm2022/router.mjs",
       "file": "@angular_router.js",
-      "fileHash": "c1b938f4",
+      "fileHash": "345f12b7",
       "needsInterop": false
     },
     "luxon": {
       "src": "../../../../../../node_modules/luxon/src/luxon.js",
       "file": "luxon.js",
-      "fileHash": "1faaf22d",
+      "fileHash": "34b10d55",
       "needsInterop": false
     },
     "rxjs": {
       "src": "../../../../../../node_modules/rxjs/dist/esm5/index.js",
       "file": "rxjs.js",
-      "fileHash": "5a336bbe",
+      "fileHash": "dd1cecfc",
       "needsInterop": false
     },
     "@angular/material/snack-bar": {
       "src": "../../../../../../node_modules/@angular/material/fesm2022/snack-bar.mjs",
       "file": "@angular_material_snack-bar.js",
-      "fileHash": "ce248216",
+      "fileHash": "baddb9ce",
+      "needsInterop": false
+    },
+    "@angular/common/locales/es": {
+      "src": "../../../../../../node_modules/@angular/common/locales/es.mjs",
+      "file": "@angular_common_locales_es.js",
+      "fileHash": "6e0b5c8b",
       "needsInterop": false
     }
   },

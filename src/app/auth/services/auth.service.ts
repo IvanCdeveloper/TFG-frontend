@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment';
 import { AuthResponse } from '../interfaces/auth-response.interface';
 import { catchError, map, Observable, of, tap, throwError, } from 'rxjs';
 import { rxResource } from '@angular/core/rxjs-interop';
+import { IsAdminGuard } from '../guards/is-admin.guard';
 
 
 
@@ -38,6 +39,8 @@ export class AuthService {
       return 'checking';
 
     if (this._user()) {
+
+
       return 'authenticated';
 
     }
@@ -47,6 +50,10 @@ export class AuthService {
 
   user = computed(() => this._user());
   token = computed(this._token);
+
+  isAdmin = computed(() => this._user()?.roles.includes('ROLE_ADMIN') ?? false);
+
+
 
 
 

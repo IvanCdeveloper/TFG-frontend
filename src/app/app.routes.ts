@@ -5,6 +5,9 @@ import { ContactarPageComponent } from './pages/contactar-page/contactar-page.co
 import { PageIndexComponent } from './pages/page-index/page-index.component';
 import { NotAuthenticatedGuard } from './auth/guards/not-authenticated.guard';
 import { AuthenticatedGuard } from './auth/guards/authenticated.guard';
+import { IsAdminGuard } from './auth/guards/is-admin.guard';
+import { AdminPageComponent } from './admin/admin-page/admin-page.component';
+import { RepairPageComponent } from './repairs/pages/repair-page/repair-page.component';
 
 export const routes: Routes = [
 
@@ -21,7 +24,16 @@ export const routes: Routes = [
   },
   {
     path: 'reparaciones',
-    component: ReparacionesPageComponent,
+    children: [
+      {
+        path: '',
+        component: ReparacionesPageComponent
+      },
+      {
+        path: ':id',
+        component: RepairPageComponent
+      }
+    ],
     canMatch: [
       AuthenticatedGuard
     ]
@@ -29,6 +41,13 @@ export const routes: Routes = [
   {
     path: 'contactar',
     component: ContactarPageComponent
+  },
+  {
+    path: 'admin',
+    component: AdminPageComponent,
+    canMatch: [
+      IsAdminGuard
+    ]
   },
   {
     path: '',

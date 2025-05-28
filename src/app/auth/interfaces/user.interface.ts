@@ -9,7 +9,8 @@
 
 export interface User {
 
-  email: string;
+  email: string
   username: string
+  roles: string[]
 
 }

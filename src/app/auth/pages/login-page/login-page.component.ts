@@ -65,11 +65,10 @@ export class LoginPageComponent {
         console.log('HTTP Error:', httpError);
         console.log('Body:', httpError.error);
 
-        // httpError.error debe ser tu objeto { email: "..." }
+
         if (httpError.status === 400 && httpError.error && typeof httpError.error === 'object') {
           this.setFormErrors(httpError.error);
         } else if (httpError.status === 403) {
-          // ❗ Aquí manejas credenciales incorrectas
           this.generalError.set('Credenciales incorrectas');
         } else {
           this.hasError.set(true);
@@ -90,6 +89,9 @@ export class LoginPageComponent {
       }
     });
   }
+
+
+
 
 
 }

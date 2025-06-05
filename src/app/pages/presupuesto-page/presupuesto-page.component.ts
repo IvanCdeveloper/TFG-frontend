@@ -7,13 +7,13 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RepairService } from '../../repairs/services/repair.service';
 import { environment } from '../../environments/environment';
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, NgClass } from '@angular/common';
 
 
 const baseUrl = environment.baseUrl;
 @Component({
   selector: 'app-presupuesto-page',
-  imports: [ReactiveFormsModule, CurrencyPipe],
+  imports: [ReactiveFormsModule, CurrencyPipe, NgClass],
   templateUrl: './presupuesto-page.component.html',
 
 })
@@ -22,7 +22,7 @@ export class PresupuestoPageComponent {
   private http = inject(HttpClient);
   private fb = inject(FormBuilder)
   private router = inject(Router);
-  private repairService = inject(RepairService)
+  repairService = inject(RepairService)
 
   presupuestoForm = this.fb.group({
     brand: [''],
@@ -40,33 +40,31 @@ export class PresupuestoPageComponent {
     this.partsSelected().reduce((sum, part) => sum + part.price, 0)
   );
 
-  obtainbrands() {
-    this.http.get<any[]>(`${baseUrl}/parts/brands`).subscribe((data) => {
-      console.log('BRANDS:', data);
+  getBrands() {
+    return this.repairService.obtainBrands().subscribe((data) => {
+      console.log('MODELS:', data);
       this.brands.set(data);
     });
   }
-
-  obtainmodels(marca: string) {
-    this.http.get<any[]>(`${baseUrl}/parts/models`, {
-      params: { brand: marca }
-    }).subscribe((data) => {
-      console.log('MODELS:', data);
+  getModels(marca: string) {
+    this.repairService.obtainModels(marca).subscribe((data) => {
+      console.log('PARTS:', data);
       this.models.set(data);
     });
   }
-  obtainparts(marca: string, modelo: string) {
-    this.http.get<any[]>(`${baseUrl}/parts`, {
-      params: { brand: marca, model: modelo }
-    }).subscribe((data) => {
-      console.log('PARTS:', data);
+  getParts(marca: string, modelo: string) {
+    this.repairService.obtainParts(marca, modelo).subscribe((data) => {
+      console.log('BRANDS:', data);
       this.parts.set(data);
     });
   }
 
+
+
+
   onMarcaSeleccionada(marcaId: string) {
     this.brandSelected.set(marcaId);
-    this.obtainmodels(marcaId);
+    this.getModels(marcaId);
   }
 
   onMarcaChange(event: Event) {
@@ -77,7 +75,7 @@ export class PresupuestoPageComponent {
 
   onModelSelected(model: string) {
     this.modelSelected.set(model);
-    this.obtainparts(this.brandSelected(), model)
+    this.getParts(this.brandSelected(), model)
 
 
 
@@ -115,12 +113,14 @@ export class PresupuestoPageComponent {
     return this.partsSelected()?.some(p => p.id === part.id) ?? false;
   }
 
+
+
   onSubmit() {
     const payload = {
       brand: this.brandSelected(),
       model: this.modelSelected(),
-      parts: this.partsSelected().map(part => ({ id: part.id })),
-      duration: null,
+      parts: this.partsSelected().map(part => ({ id: part.id }))
+
     };
 
     this.http.post<Repair>(`${baseUrl}/repairs`, payload)
@@ -136,7 +136,6 @@ export class PresupuestoPageComponent {
 
     this.router.navigateByUrl("/reparaciones");
   }
-
 
 
 

@@ -8,6 +8,7 @@ import { AuthenticatedGuard } from './auth/guards/authenticated.guard';
 import { IsAdminGuard } from './auth/guards/is-admin.guard';
 import { AdminPageComponent } from './admin/admin-page/admin-page.component';
 import { RepairPageComponent } from './repairs/pages/repair-page/repair-page.component';
+import { ProfilePageComponent } from './auth/pages/profile-page/profile-page.component';
 
 export const routes: Routes = [
 
@@ -41,6 +42,10 @@ export const routes: Routes = [
   {
     path: 'contactar',
     component: ContactarPageComponent
+  },
+  {
+    path: 'profile',
+    component: ProfilePageComponent
   },
   {
     path: 'admin',

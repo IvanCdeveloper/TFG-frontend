@@ -64,7 +64,6 @@
             },
             "development": {
               "buildTarget": "tienda-reparaciones:build:development"
-              
             }
           },
           "defaultConfiguration": "development"

@@ -8,6 +8,10 @@ export const environment = {
   giphyApiKey: '',
 
   //URLS
-  baseUrl: 'http://localhost:8080/api'
+  // Para desarrollo
+  /*   baseUrl: 'http://localhost:8080/api' */
+  // Para producción
   /* baseUrl: 'https://ivancuarteros.com/api' */
+  // Para producción con docker
+  baseUrl: "/api"
 }
